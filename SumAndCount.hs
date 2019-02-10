@@ -1,10 +1,15 @@
 module SumAndCount where
 
 sumAndCount :: Integer -> (Integer, Integer)
-sumAndCount n = (count (+) n, count (const (1+)) n)  
-  where count f n = foldr (f . digitToInt) 0 (show n)
+sumAndCount n = (sumDigits $$s n, countDigits $ abs n)
 
-digitToInt :: Char -> Integer
-digitToInt = read . (: [])
+absNum :: Integer -> Integer
+absNum n = if n < 0 then (-n) else n
 
-generateBigNum n = 10^n - 1
+sumDigits :: Integer -> Integer
+sumDigits 0 = 0
+sumDigits n = n `mod` 10 + sumDigits (n `div` 10)
+
+countDigits :: Integer -> Integer
+countDigits 0 = 0
+countDigits n = 1 + countDigits (n `div` 10)
