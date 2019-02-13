@@ -1,10 +1,12 @@
 module SumAndCount where
 
-sumAndCount :: Integer -> (Integer, Integer)
-sumAndCount n = (count (+) n, count (const (1+)) n)
-  where count f n = foldr (f . digitToInt) 0 (show n)
+import Data.Char
 
-digitToInt :: Char -> Integer
-digitToInt = read . (: [])
+sum'n'count :: Integer -> (Integer, Integer)
+sum'n'count n = (count (+) $ abs n, count (const (1+)) $ abs n)
+  where count f n = foldr (f . digitToInteger) 0 (show n)
+
+digitToInteger :: Char -> Integer
+digitToInteger = toInteger . digitToInt
 
 generateBigNum n = 10^n - 1
